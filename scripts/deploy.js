@@ -30,4 +30,4 @@ async function main(sierraPath) {
 main(contractPath);
 setInterval(() => {
   main(contractPath);
-}, 20000);
+}, 25000);
