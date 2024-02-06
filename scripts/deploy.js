@@ -7,24 +7,27 @@ const account = new starknet.Account(
   provider,
   "0x4",
   "0x00c1cf1490de1352865301bb8705143f3ef938f97fdf892f1090dcb5ac7bcd1d",
-  "1",
+  "1"
 );
+
+const contractPath = "./contracts/OpenZeppelinAccountCairoOne.sierra.json";
+
+let counter = 1;
 
 async function main(sierraPath) {
   const currentDir = process.cwd();
   const sierra = require(`${currentDir}/${sierraPath}`);
 
-  let constructorArgs = [];
-  if (process.argv.length > 3) {
-    constructorArgs = process.argv.slice(3);
-  }
+  let constructorArgs = ["0x1"];
 
   const deployResult = await account.deploy({
     classHash: starknet.hash.computeContractClassHash(sierra),
     constructorCalldata: constructorArgs,
   });
 
-  console.log("This is the deploy result - ", deployResult);
+  console.log(counter++);
 }
-
-main(process.argv[2]);
+main(contractPath);
+setInterval(() => {
+  main(contractPath);
+}, 25000);
